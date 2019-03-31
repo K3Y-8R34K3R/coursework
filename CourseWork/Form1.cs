@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Threading;
 //using System.Collections.Generic;
 //using System.IO;
 //using System.Linq;
@@ -75,7 +76,9 @@ namespace CourseWork
             }
 
             buff_graphics.Render(main_graphics);
-            timer1.Enabled = true;
+
+            fadeout();
+            start_circles_draw();
         }
 
         private void fill_form_background()
@@ -100,9 +103,9 @@ namespace CourseWork
                                         ClientRectangle.Width, ClientRectangle.Height);
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void fadeout()
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 40; i++)
             {
                 fill_form_background();
                 if (outline_alpha != 0) outline_alpha--;
@@ -114,14 +117,14 @@ namespace CourseWork
                     DrawCircle(coords[0, j], coords[1, j], radiuses[j]);
                 }
                 buff_graphics.Render(main_graphics);
+                Thread.Sleep(50);
             }
 
             buff_graphics.Render(main_graphics);
-            start_circles_draw();
         }
-
         private void Main_Form_Load(object sender, EventArgs e)
         {
+            form_background_painter();
             #region somecode
             //List<PictureBox> picturebox = new List<PictureBox>();
             //DirectoryInfo directoryInfo = new DirectoryInfo("media\\logosmall.png");
@@ -154,18 +157,7 @@ namespace CourseWork
         {
             main_graphics.Dispose();
             buff_graphics.Dispose();
-            timer1.Enabled = false;
             this.Close();
-        }
-
-        private void paintToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            form_background_painter();
-        }
-
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            timer1.Interval = trackBar1.Value;
         }
     }
 }
