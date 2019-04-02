@@ -29,22 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.button1 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.loading_picture = new System.Windows.Forms.PictureBox();
+            this.button_picture1 = new System.Windows.Forms.PictureBox();
+            this.button_picture2 = new System.Windows.Forms.PictureBox();
+            this.button_picture3 = new System.Windows.Forms.PictureBox();
+            this.button_exit = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_picture1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_picture2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_picture3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_exit)).BeginInit();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 348);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 22);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // timer1
             // 
@@ -52,21 +48,57 @@
             this.timer1.Interval = 5400;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // pictureBox1
+            // loading_picture
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(388, 263);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(107, 107);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.loading_picture.Location = new System.Drawing.Point(371, 263);
+            this.loading_picture.Name = "loading_picture";
+            this.loading_picture.Size = new System.Drawing.Size(17, 18);
+            this.loading_picture.TabIndex = 1;
+            this.loading_picture.TabStop = false;
+            // 
+            // button_picture1
+            // 
+            this.button_picture1.Location = new System.Drawing.Point(12, 12);
+            this.button_picture1.Name = "button_picture1";
+            this.button_picture1.Size = new System.Drawing.Size(16, 20);
+            this.button_picture1.TabIndex = 2;
+            this.button_picture1.TabStop = false;
+            // 
+            // button_picture2
+            // 
+            this.button_picture2.Location = new System.Drawing.Point(34, 12);
+            this.button_picture2.Name = "button_picture2";
+            this.button_picture2.Size = new System.Drawing.Size(16, 20);
+            this.button_picture2.TabIndex = 3;
+            this.button_picture2.TabStop = false;
+            // 
+            // button_picture3
+            // 
+            this.button_picture3.Location = new System.Drawing.Point(56, 12);
+            this.button_picture3.Name = "button_picture3";
+            this.button_picture3.Size = new System.Drawing.Size(16, 20);
+            this.button_picture3.TabIndex = 4;
+            this.button_picture3.TabStop = false;
+            // 
+            // button_exit
+            // 
+            this.button_exit.Location = new System.Drawing.Point(756, 263);
+            this.button_exit.Name = "button_exit";
+            this.button_exit.Size = new System.Drawing.Size(16, 20);
+            this.button_exit.TabIndex = 5;
+            this.button_exit.TabStop = false;
+            this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
             // 
             // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(896, 382);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(784, 295);
+            this.Controls.Add(this.button_exit);
+            this.Controls.Add(this.button_picture3);
+            this.Controls.Add(this.button_picture2);
+            this.Controls.Add(this.button_picture1);
+            this.Controls.Add(this.loading_picture);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Main_Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -74,15 +106,22 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Main_Form_Load);
             this.Resize += new System.EventHandler(this.Main_Form_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_picture1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_picture2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_picture3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_exit)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox loading_picture;
+        private System.Windows.Forms.PictureBox button_picture1;
+        private System.Windows.Forms.PictureBox button_picture2;
+        private System.Windows.Forms.PictureBox button_picture3;
+        private System.Windows.Forms.PictureBox button_exit;
     }
 }
 
