@@ -63,6 +63,8 @@
             this.button_picture1.Size = new System.Drawing.Size(16, 20);
             this.button_picture1.TabIndex = 2;
             this.button_picture1.TabStop = false;
+            this.button_picture1.MouseLeave += new System.EventHandler(this.button_picture1_MouseLeave);
+            this.button_picture1.MouseHover += new System.EventHandler(this.button_picture1_MouseHover);
             // 
             // button_picture2
             // 
@@ -71,6 +73,8 @@
             this.button_picture2.Size = new System.Drawing.Size(16, 20);
             this.button_picture2.TabIndex = 3;
             this.button_picture2.TabStop = false;
+            this.button_picture2.MouseLeave += new System.EventHandler(this.button_picture2_MouseLeave);
+            this.button_picture2.MouseHover += new System.EventHandler(this.button_picture2_MouseHover);
             // 
             // button_picture3
             // 
@@ -79,6 +83,8 @@
             this.button_picture3.Size = new System.Drawing.Size(16, 20);
             this.button_picture3.TabIndex = 4;
             this.button_picture3.TabStop = false;
+            this.button_picture3.MouseLeave += new System.EventHandler(this.button_picture3_MouseLeave);
+            this.button_picture3.MouseHover += new System.EventHandler(this.button_picture3_MouseHover);
             // 
             // button_exit
             // 
@@ -88,6 +94,8 @@
             this.button_exit.TabIndex = 5;
             this.button_exit.TabStop = false;
             this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
+            this.button_exit.MouseLeave += new System.EventHandler(this.button_exit_MouseLeave);
+            this.button_exit.MouseHover += new System.EventHandler(this.button_exit_MouseHover);
             // 
             // Main_Form
             // 
@@ -104,6 +112,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_Form_FormClosing);
             this.Load += new System.EventHandler(this.Main_Form_Load);
             this.Resize += new System.EventHandler(this.Main_Form_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).EndInit();
