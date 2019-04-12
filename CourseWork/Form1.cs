@@ -20,21 +20,17 @@ namespace CourseWork
         const string loading_file = "res\\loading.gif";
         const string bg_image_file = "res\\bg.png";
         const string button_image_file = "res\\button";
-
-        Image peer_img_file = Image.FromFile("res\\peer.png");
-
-        PictureBox[] pb_array = new PictureBox[11];
-        Graphics main_graphics;
+        Graphics main_graphics;     //объект графики для отрисовки с привязкой к форме
 
         public Main_Form()
         {
             InitializeComponent();
-            DoubleBuffered = true; // double bufferisation support
-            this.SetStyle(ControlStyles.ResizeRedraw, true); // resize redraw support
-            main_graphics = this.CreateGraphics();           // making graphics based on form
-            main_graphics.SmoothingMode = SmoothingMode.AntiAlias; // smoothing enabling
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true); // transparency support
-            this.SetStyle(ControlStyles.UserPaint, true); //user paint support
+            DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            main_graphics = this.CreateGraphics();           //задание графики с привязкой к форме
+            main_graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
         }
 
         private void loading_screen()
@@ -49,7 +45,6 @@ namespace CourseWork
 
         private void draw_gui()
         {
-            picturebox_draw(2);
             try
             {
                 //
@@ -73,40 +68,13 @@ namespace CourseWork
                 //
                 //button exit
                 //
-                button_exit.Location = new Point(this.Width - 48 - Image.FromFile(button_image_file + "_exit.png").Size.Width, this.Height - 48 - Image.FromFile(button_image_file + "_exit.png").Size.Height);
+                button_exit.Location = new Point(this.Width -48-Image.FromFile(button_image_file + "_exit.png").Size.Width, this.Height - 48 - Image.FromFile(button_image_file + "_exit.png").Size.Height);
                 button_exit.Size = Image.FromFile(button_image_file + "_exit.png").Size;
                 button_exit.Image = Image.FromFile(button_image_file + "_exit.png");
-                //
-                // trackBar
-                //
-                trackBar1.Location = new Point(button_picture3.Location.X + button_picture3.Width + 48, 52);
-                trackBar1.Size = new Size(355, 97);
-                trackBar1.Visible = true;
             }
             catch
             {
                 //ArgumentNullException
-            }
-        }
-
-        private void picturebox_draw(int amount)
-        {
-            // disposing cntrls
-            int iter = 0;
-            while (pb_array[iter] != null)
-            {
-                this.pb_array[iter].Dispose();
-                iter++;
-            }
-            // drawing pictureboxes on form
-            for (int i = 0; i < amount; i++)
-            {
-                pb_array[i] = new PictureBox();
-                pb_array[i].Image = peer_img_file;
-                pb_array[i].Location = new Point(48 + i * peer_img_file.Width + 40 * i, 193);
-                pb_array[i].Name = "pictureBox" + i.ToString();
-                pb_array[i].Size = peer_img_file.Size;
-                Controls.Add(pb_array[i]);
             }
         }
 
@@ -119,7 +87,7 @@ namespace CourseWork
         {
             this.Invalidate();
         }
-
+        
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
@@ -127,29 +95,13 @@ namespace CourseWork
             loading_picture.Visible = false;
             this.BackColor = Color.Transparent;
             this.BackgroundImage = Image.FromFile(bg_image_file);
+            button1.Visible = true;
             draw_gui();
         }
 
         private void button_exit_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            picturebox_draw(trackBar1.Value);
-        }
-
-        private void Main_Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void Main_Form_Paint(object sender, PaintEventArgs e)
-        {
-            Pen myPen = new Pen(Color.Black, 1);
-            e.Graphics.DrawLine(myPen, 10, 10, 30 * trackBar1.Value, 30 * trackBar1.Value);
-            myPen.Dispose(); //disposing pen
         }
     }
 }

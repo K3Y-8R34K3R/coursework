@@ -35,13 +35,11 @@
             this.button_picture2 = new System.Windows.Forms.PictureBox();
             this.button_picture3 = new System.Windows.Forms.PictureBox();
             this.button_exit = new System.Windows.Forms.PictureBox();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_picture1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_picture2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_picture3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_exit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -91,23 +89,11 @@
             this.button_exit.TabStop = false;
             this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
             // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(574, 14);
-            this.trackBar1.Minimum = 2;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(147, 45);
-            this.trackBar1.TabIndex = 6;
-            this.trackBar1.Value = 2;
-            this.trackBar1.Visible = false;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
-            // 
             // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 295);
-            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.button_exit);
             this.Controls.Add(this.button_picture3);
             this.Controls.Add(this.button_picture2);
@@ -118,18 +104,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_Form_FormClosing);
             this.Load += new System.EventHandler(this.Main_Form_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Main_Form_Paint);
             this.Resize += new System.EventHandler(this.Main_Form_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_picture1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_picture2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_picture3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_exit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -140,7 +122,6 @@
         private System.Windows.Forms.PictureBox button_picture2;
         private System.Windows.Forms.PictureBox button_picture3;
         private System.Windows.Forms.PictureBox button_exit;
-        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
 
