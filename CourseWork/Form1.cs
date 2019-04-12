@@ -24,9 +24,6 @@ namespace CourseWork
         Image button2_img = Image.FromFile("res\\button2.png");
         Image button3_img = Image.FromFile("res\\button3.png");
         Image button_exit_img = Image.FromFile("res\\button_exit.png");
-        Image peer_img = Image.FromFile("res\\peer.png");
-
-        PictureBox[] pb_array = new PictureBox[11];
 
         bool init_once = true;
 
@@ -100,35 +97,11 @@ namespace CourseWork
                 button_exit.Location = new Point(this.Width - 48 - button_exit_img.Width, this.Height - 48 - button_exit_img.Height);
                 button_exit.Size = button_exit_img.Size;
                 button_exit.Image = button_exit_img;
-                //
-                // trackbar1
-                //
-                trackBar1.Visible = true;
-                trackBar1.Location = new Point(button_picture3.Location.X + button_picture3.Width + 48, 52);
-                trackBar1.Size = new Size(355, 100);
             }
             catch (FileNotFoundException)
             {
                 MessageBox.Show("\"File Not Found\" exception called.\nApplication will close soon.\nTry to re-install the application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
-            }
-        }
-
-        private void picturebox_draw(int amount)
-        {
-            int iter = 0;
-            while (pb_array[iter] != null)
-            {
-                pb_array[iter].Dispose();
-                iter++;
-            }
-            for (int i = 0; i < amount; i++)
-            {
-                pb_array[i] = new PictureBox();
-                pb_array[i].Image = peer_img;
-                pb_array[i].Size = peer_img.Size;
-                pb_array[i].Location = new Point(48+(i*pb_array[i].Width+10),96+button_picture1.Height);
-                Controls.Add(pb_array[i]);
             }
         }
 
@@ -238,19 +211,14 @@ namespace CourseWork
 
         private void button_picture3_MouseLeave(object sender, EventArgs e)
         {
-            button_picture3.Visible = false;
-            button_picture3.Location = new Point(button_picture2.Location.X + button_picture2.Width + 48, 48);
-            button_picture3.Size = button3_img.Size;
-            button_picture3.Image = button3_img;
-            button_picture3.Visible = true;
+            button_picture2.Visible = false;
+            button_exit.Location = new Point(this.Width - 48 - button_exit_img.Width, this.Height - 48 - button_exit_img.Height);
+            button_exit.Size = button_exit_img.Size;
+            button_exit.Image = button_exit_img;
+            button_picture2.Visible = true;
             init_once = true;
         }
         #endregion
-
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            picturebox_draw(trackBar1.Value);
-        }
     }
 }
 
