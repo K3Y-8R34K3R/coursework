@@ -127,7 +127,7 @@ namespace CourseWork
                 pb_array[i] = new PictureBox();
                 pb_array[i].Image = peer_img;
                 pb_array[i].Size = peer_img.Size;
-                pb_array[i].Location = new Point(48+(i*pb_array[i].Width+10),96+button_picture1.Height);
+                pb_array[i].Location = new Point(48 + (i * pb_array[i].Width + 10), 96 + button_picture1.Height);
                 Controls.Add(pb_array[i]);
             }
         }
