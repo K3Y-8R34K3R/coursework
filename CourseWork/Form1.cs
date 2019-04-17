@@ -31,6 +31,8 @@ namespace CourseWork
         bool init_once = true;
 
         Graphics main_graphics;     //объект графики для отрисовки с привязкой к форме
+        BufferedGraphics buff;
+        BufferedGraphicsContext buff_cont;
         #endregion
 
         #region Main_Form code
@@ -41,6 +43,7 @@ namespace CourseWork
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             main_graphics = this.CreateGraphics();           //задание графики с привязкой к форме
             main_graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            buff = BufferedGraphicsManager.Current.Allocate(main_graphics, ClientRectangle);
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.SetStyle(ControlStyles.UserPaint, true);
         }
@@ -114,8 +117,11 @@ namespace CourseWork
             }
         }
 
-        private void picturebox_draw(int amount)
+        private void picturebox_draw(object sender, int amount, PaintEventArgs e)
         {
+            buff.Dispose();
+            buff = BufferedGraphicsManager.Current.Allocate(main_graphics, ClientRectangle);
+            buff.Graphics.DrawImage(this.BackgroundImage, ClientRectangle);
             int iter = 0;
             while (pb_array[iter] != null)
             {
@@ -127,9 +133,13 @@ namespace CourseWork
                 pb_array[i] = new PictureBox();
                 pb_array[i].Image = peer_img;
                 pb_array[i].Size = peer_img.Size;
-                pb_array[i].Location = new Point(48 + (i * pb_array[i].Width + 10), 96 + button_picture1.Height);
+                pb_array[i].Location = new Point(48 + i * (pb_array[i].Width + 100), 96 + button_picture1.Height);
                 Controls.Add(pb_array[i]);
             }
+            for (int i = 0; i < amount - 1; i++)
+                for (int j = i + 1; j < amount; j++)
+                    buff.Graphics.DrawLine(new Pen(Color.Black), new Point(pb_array[i].Location.X + pb_array[i].Width, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X, pb_array[j].Location.Y + pb_array[j].Height / 2));
+            buff.Render();
         }
 
         #endregion
@@ -249,7 +259,7 @@ namespace CourseWork
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            picturebox_draw(trackBar1.Value);
+            picturebox_draw(this, trackBar1.Value, new PaintEventArgs(CreateGraphics(), ClientRectangle));
         }
     }
 }
