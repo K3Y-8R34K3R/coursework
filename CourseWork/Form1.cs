@@ -29,6 +29,9 @@ namespace CourseWork
         PictureBox[] pb_array = new PictureBox[11];
 
         bool init_once = true;
+        bool movement = false;
+
+        Point temp;
 
         Graphics main_graphics;     //объект графики для отрисовки с привязкой к форме
         BufferedGraphics buff;
@@ -133,12 +136,50 @@ namespace CourseWork
                 pb_array[i] = new PictureBox();
                 pb_array[i].Image = peer_img;
                 pb_array[i].Size = peer_img.Size;
-                pb_array[i].Location = new Point(48 + i * (pb_array[i].Width + 100), 96 + button_picture1.Height);
+                pb_array[i].Location = new Point(48 + i * (pb_array[i].Width + 50), 96 + button_picture1.Height);
+                pb_array[i].MouseDown += new MouseEventHandler(pb_MouseDown);
+                pb_array[i].MouseUp += new MouseEventHandler(pb_MouseUp);
+                pb_array[i].MouseMove += new MouseEventHandler(pb_MouseMove);
                 Controls.Add(pb_array[i]);
             }
             for (int i = 0; i < amount - 1; i++)
                 for (int j = i + 1; j < amount; j++)
-                    buff.Graphics.DrawLine(new Pen(Color.Black), new Point(pb_array[i].Location.X + pb_array[i].Width, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X, pb_array[j].Location.Y + pb_array[j].Height / 2));
+                    buff.Graphics.DrawLine(new Pen(Color.Black),
+                        new Point(pb_array[i].Location.X + pb_array[i].Width, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X, pb_array[j].Location.Y + pb_array[j].Height / 2));
+            buff.Render();
+        }
+
+        void pb_MouseDown(object sender, MouseEventArgs e)
+        {
+            temp = e.Location;
+            movement = true;
+        }
+
+        void pb_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (movement)
+            {
+                PictureBox pb = (PictureBox)sender;
+                Point pt = pb.Location;
+                pt.X += e.X - temp.X;
+                pt.Y += e.Y - temp.Y;
+
+                pb.Location = pt;
+            }
+        }
+
+        void pb_MouseUp(object sender, MouseEventArgs e)
+        {
+            movement = false;
+
+            buff.Dispose();
+            buff = BufferedGraphicsManager.Current.Allocate(main_graphics, ClientRectangle);
+            buff.Graphics.DrawImage(this.BackgroundImage, ClientRectangle);
+
+            for (int i = 0; i < trackBar1.Value - 1; i++)
+                for (int j = i + 1; j < trackBar1.Value; j++)
+                    buff.Graphics.DrawLine(new Pen(Color.Black),
+                        new Point(pb_array[i].Location.X + pb_array[i].Width, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X, pb_array[j].Location.Y + pb_array[j].Height / 2));
             buff.Render();
         }
 
