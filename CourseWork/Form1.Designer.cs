@@ -31,15 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.loading_picture = new System.Windows.Forms.PictureBox();
-            this.button_picture1 = new System.Windows.Forms.PictureBox();
-            this.button_picture2 = new System.Windows.Forms.PictureBox();
-            this.button_picture3 = new System.Windows.Forms.PictureBox();
             this.button_exit = new System.Windows.Forms.PictureBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.button_picture1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.button_picture2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.button_picture3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_exit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -57,36 +51,6 @@
             this.loading_picture.Size = new System.Drawing.Size(17, 18);
             this.loading_picture.TabIndex = 1;
             this.loading_picture.TabStop = false;
-            // 
-            // button_picture1
-            // 
-            this.button_picture1.Location = new System.Drawing.Point(12, 12);
-            this.button_picture1.Name = "button_picture1";
-            this.button_picture1.Size = new System.Drawing.Size(16, 20);
-            this.button_picture1.TabIndex = 2;
-            this.button_picture1.TabStop = false;
-            this.button_picture1.MouseLeave += new System.EventHandler(this.button_picture1_MouseLeave);
-            this.button_picture1.MouseHover += new System.EventHandler(this.button_picture1_MouseHover);
-            // 
-            // button_picture2
-            // 
-            this.button_picture2.Location = new System.Drawing.Point(34, 12);
-            this.button_picture2.Name = "button_picture2";
-            this.button_picture2.Size = new System.Drawing.Size(16, 20);
-            this.button_picture2.TabIndex = 3;
-            this.button_picture2.TabStop = false;
-            this.button_picture2.MouseLeave += new System.EventHandler(this.button_picture2_MouseLeave);
-            this.button_picture2.MouseHover += new System.EventHandler(this.button_picture2_MouseHover);
-            // 
-            // button_picture3
-            // 
-            this.button_picture3.Location = new System.Drawing.Point(56, 12);
-            this.button_picture3.Name = "button_picture3";
-            this.button_picture3.Size = new System.Drawing.Size(16, 20);
-            this.button_picture3.TabIndex = 4;
-            this.button_picture3.TabStop = false;
-            this.button_picture3.MouseLeave += new System.EventHandler(this.button_picture3_MouseLeave);
-            this.button_picture3.MouseHover += new System.EventHandler(this.button_picture3_MouseHover);
             // 
             // button_exit
             // 
@@ -117,9 +81,6 @@
             this.ClientSize = new System.Drawing.Size(784, 295);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.button_exit);
-            this.Controls.Add(this.button_picture3);
-            this.Controls.Add(this.button_picture2);
-            this.Controls.Add(this.button_picture1);
             this.Controls.Add(this.loading_picture);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Main_Form";
@@ -130,9 +91,6 @@
             this.Load += new System.EventHandler(this.Main_Form_Load);
             this.Resize += new System.EventHandler(this.Main_Form_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.button_picture1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.button_picture2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.button_picture3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_exit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
@@ -143,9 +101,6 @@
         #endregion
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.PictureBox loading_picture;
-        private System.Windows.Forms.PictureBox button_picture1;
-        private System.Windows.Forms.PictureBox button_picture2;
-        private System.Windows.Forms.PictureBox button_picture3;
         private System.Windows.Forms.PictureBox button_exit;
         private System.Windows.Forms.TrackBar trackBar1;
     }
