@@ -18,19 +18,32 @@ namespace CourseWork
     public partial class Main_Form : Form
     {
         #region global vars
+        /// <summary>
+        ///блок ресурсов для отрисовки кнопок
+        /// </summary>
         Image loading_file_img = Image.FromFile("res\\loading.gif");
         Image bg_img = Image.FromFile("res\\bg.png");
         Image button_exit_img = Image.FromFile("res\\button_exit.png");
+        Image button_start_img = Image.FromFile("res\\button_start.png");
+        Image button_draw_img = Image.FromFile("res\\button_draw.png");
         Image peer_img = Image.FromFile("res\\peer.png");
 
+
+
+        /// <summary>
+        /// Массив с "пирами" и булевы переменные для корректной отрисовки
+        /// </summary>
         PictureBox[] pb_array = new PictureBox[11];
 
         bool init_once = true;
         bool movement = false;
 
+        /// <summary>
+        /// Объекты графики для отрисовки GUI
+        /// </summary>
         Point temp;
 
-        Graphics main_graphics;     //объект графики для отрисовки с привязкой к форме
+        Graphics main_graphics;
         BufferedGraphics buff;
         //BufferedGraphicsContext buff_cont;
         #endregion
@@ -80,25 +93,42 @@ namespace CourseWork
             try
             {
                 //
-                //button exit
+                // label1
                 //
-                button_exit.Location = new Point(this.Width - 48 - button_exit_img.Width, this.Height - 48 - button_exit_img.Height);
-                button_exit.Size = button_exit_img.Size;
-                button_exit.Image = button_exit_img;
+                label1.Visible = true;
+                label1.Location = new Point(48,48);
                 //
                 // trackbar1
                 //
                 trackBar1.Visible = true;
-                trackBar1.Location = new Point((Width-355)/2, 52);
+                trackBar1.Location = new Point(label1.Location.X, label1.Location.Y + 48);
                 trackBar1.Size = new Size(355, 100);
+                //
+                // отрисовка кнопки
+                //
+                //button_draw.Visible = true;
+                //button_draw.Location = new Point(trackBar1.Location.X, trackBar1.Location.Y + 48);
+                //button_exit.Size = button_draw_img.Size;
+                //button_exit.Image = button_draw_img;
+                //
+                //button exit
+                //
+                button_exit.Visible = true;
+                button_exit.Location = new Point(this.Width - 48 - button_exit_img.Width, this.Height - 48 - button_exit_img.Height);
+                button_exit.Size = button_exit_img.Size;
+                button_exit.Image = button_exit_img;
             }
             catch (FileNotFoundException)
             {
                 MessageBox.Show("\"File Not Found\" exception called.\nApplication will close soon.\nTry to re-install the application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
+            picturebox_draw(this, trackBar1.Value, new PaintEventArgs(CreateGraphics(), ClientRectangle));
         }
 
+        //
+        // Прорисовка "пиров", назначение методов и их рендер
+        //
         private void picturebox_draw(object sender, int amount, PaintEventArgs e)
         {
             buff.Dispose();
@@ -164,6 +194,9 @@ namespace CourseWork
         #endregion
 
         #region controls methods
+        /// <summary>
+        /// Метод для тайминга анимации загрузки
+        /// </summary>
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
@@ -174,6 +207,9 @@ namespace CourseWork
             draw_gui();
         }
 
+        //
+        // Блок анимаций кнопок на триггеры "MouseHover" и "MouseLeave"
+        //
         private void button_exit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -202,12 +238,15 @@ namespace CourseWork
                 init_once = false;
             }
         }
-        #endregion
 
+        //
+        // Метод-событие для триггера "ValueChanged"
+        //
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             picturebox_draw(this, trackBar1.Value, new PaintEventArgs(CreateGraphics(), ClientRectangle));
         }
+        #endregion
     }
 }
 
