@@ -18,9 +18,10 @@ namespace CourseWork
     public partial class Main_Form : Form
     {
         #region global vars
-        /// <summary>
-        ///блок ресурсов для отрисовки кнопок
-        /// </summary>
+
+        //
+        // Resources for buttons and other elements 
+        //
         Image loading_file_img = Image.FromFile("res\\loading.gif");
         Image bg_img = Image.FromFile("res\\bg.png");
         Image button_exit_img = Image.FromFile("res\\button_exit.png");
@@ -28,37 +29,33 @@ namespace CourseWork
         Image button_draw_img = Image.FromFile("res\\button_draw.png");
         Image peer_img = Image.FromFile("res\\peer.png");
 
-
-
-        /// <summary>
-        /// Массив с "пирами" и булевы переменные для корректной отрисовки
-        /// </summary>
+        //
+        // "Peers" array and some of bools for correct work
+        //
         PictureBox[] pb_array = new PictureBox[11];
 
         bool init_once = true;
         bool movement = false;
 
-        /// <summary>
-        /// Объекты графики для отрисовки GUI
-        /// </summary>
+        //
+        // GUI objects
+        //
         Point temp;
 
         Graphics main_graphics;
         BufferedGraphics buff;
-        //BufferedGraphicsContext buff_cont;
         #endregion
 
         #region Main_Form code
         public Main_Form()
         {
             InitializeComponent();
-            DoubleBuffered = true;
-            this.SetStyle(ControlStyles.ResizeRedraw, true);
-            main_graphics = this.CreateGraphics();           //задание графики с привязкой к форме
-            main_graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            buff = BufferedGraphicsManager.Current.Allocate(main_graphics, ClientRectangle);
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
+            DoubleBuffered = true; // Enabling  of double bufferisation
+            this.SetStyle(ControlStyles.ResizeRedraw, true); // setting style to redraw on resize
+            main_graphics = this.CreateGraphics();           // setting graphics reffered to form
+            main_graphics.SmoothingMode = SmoothingMode.AntiAlias; // smothing mode supports anti-aliasing
+            buff = BufferedGraphicsManager.Current.Allocate(main_graphics, ClientRectangle); // graphics buffer
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true); // enabling of transparency support
         }
 
         private void Main_Form_Load(object sender, EventArgs e)
@@ -78,6 +75,10 @@ namespace CourseWork
         #endregion
 
         #region custom methods
+
+        /// <summary>
+        /// Method for loading screen formation
+        /// </summary>
         private void loading_screen()
         {
             this.BackColor = Color.Black;
@@ -96,7 +97,7 @@ namespace CourseWork
                 // label1
                 //
                 label1.Visible = true;
-                label1.Location = new Point(48,48);
+                label1.Location = new Point(48, 48);
                 //
                 // trackbar1
                 //
@@ -104,7 +105,7 @@ namespace CourseWork
                 trackBar1.Location = new Point(label1.Location.X, label1.Location.Y + 48);
                 trackBar1.Size = new Size(355, 100);
                 //
-                // отрисовка кнопки
+                // button %smth%
                 //
                 //button_draw.Visible = true;
                 //button_draw.Location = new Point(trackBar1.Location.X, trackBar1.Location.Y + 48);
@@ -127,20 +128,20 @@ namespace CourseWork
         }
 
         //
-        // Прорисовка "пиров", назначение методов и их рендер
+        // Peer creating, drawing and linking methods
         //
         private void picturebox_draw(object sender, int amount, PaintEventArgs e)
         {
-            buff.Dispose();
-            buff = BufferedGraphicsManager.Current.Allocate(main_graphics, ClientRectangle);
-            buff.Graphics.DrawImage(this.BackgroundImage, ClientRectangle);
+            buff.Dispose(); // clearing resources of buffer
+            buff = BufferedGraphicsManager.Current.Allocate(main_graphics, ClientRectangle); // resetting buffer
+            buff.Graphics.DrawImage(this.BackgroundImage, ClientRectangle); // repainting background
             int iter = 0;
             while (pb_array[iter] != null)
             {
-                pb_array[iter].Dispose();
+                pb_array[iter].Dispose(); // clearing resources of each "peer"
                 iter++;
             }
-            for (int i = 0; i < amount; i++)
+            for (int i = 0; i < amount; i++) // creating each peer etc.
             {
                 pb_array[i] = new PictureBox();
                 pb_array[i].Image = peer_img;
@@ -155,15 +156,21 @@ namespace CourseWork
                 for (int j = i + 1; j < amount; j++)
                     buff.Graphics.DrawLine(new Pen(Color.Black),
                         new Point(pb_array[i].Location.X + pb_array[i].Width, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X, pb_array[j].Location.Y + pb_array[j].Height / 2));
-            buff.Render();
+            buff.Render(); // rendering peers
         }
 
+        /// <summary>
+        /// Method for mouse button down event
+        /// </summary>
         void pb_MouseDown(object sender, MouseEventArgs e)
         {
             temp = e.Location;
             movement = true;
         }
 
+        /// <summary>
+        /// Method for mouse movement event
+        /// </summary>
         void pb_MouseMove(object sender, MouseEventArgs e)
         {
             if (movement)
@@ -176,6 +183,9 @@ namespace CourseWork
             }
         }
 
+        /// <summary>
+        /// Method for mouse button up event
+        /// </summary>
         void pb_MouseUp(object sender, MouseEventArgs e)
         {
             movement = false;
@@ -194,8 +204,9 @@ namespace CourseWork
         #endregion
 
         #region controls methods
+
         /// <summary>
-        /// Метод для тайминга анимации загрузки
+        /// Method for animation screen timing
         /// </summary>
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -207,14 +218,14 @@ namespace CourseWork
             draw_gui();
         }
 
-        //
-        // Блок анимаций кнопок на триггеры "MouseHover" и "MouseLeave"
-        //
         private void button_exit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Animation on mouse leave event
+        /// </summary>
         private void button_exit_MouseLeave(object sender, EventArgs e)
         {
             button_exit.Visible = false;
@@ -225,6 +236,9 @@ namespace CourseWork
             init_once = true;
         }
 
+        /// <summary>
+        /// Animation on mouse hover event
+        /// </summary>
         private void button_exit_MouseHover(object sender, EventArgs e)
         {
             if (init_once)
@@ -239,9 +253,6 @@ namespace CourseWork
             }
         }
 
-        //
-        // Метод-событие для триггера "ValueChanged"
-        //
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             picturebox_draw(this, trackBar1.Value, new PaintEventArgs(CreateGraphics(), ClientRectangle));
