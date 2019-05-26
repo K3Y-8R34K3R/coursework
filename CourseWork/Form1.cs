@@ -30,8 +30,9 @@ namespace CourseWork
         Image peer_img = Image.FromFile("res\\peer.png");
 
         //
-        // "Peers" array and some of bools for correct work
+        // "Peers" array, labels array and some of bools for correct work
         //
+        Label[] lbl_array = new Label[11];
         PictureBox[] pb_array = new PictureBox[11];
 
         bool init_once = true;
@@ -138,19 +139,33 @@ namespace CourseWork
             int iter = 0;
             while (pb_array[iter] != null)
             {
-                pb_array[iter].Dispose(); // clearing resources of each "peer"
+                // clearing resources of each "peer"
+                pb_array[iter].Dispose();
+                lbl_array[iter].Dispose();
                 iter++;
             }
             for (int i = 0; i < amount; i++) // creating each peer etc.
             {
+                //
+                // Pictureboxes determining
+                //
                 pb_array[i] = new PictureBox();
                 pb_array[i].Image = peer_img;
                 pb_array[i].Size = peer_img.Size;
-                pb_array[i].Location = new Point(48 + i * (pb_array[i].Width + 50), 148);
+                pb_array[i].Location = new Point(48 + i * (pb_array[i].Width + 50), 188);
                 pb_array[i].MouseDown += new MouseEventHandler(pb_MouseDown);
                 pb_array[i].MouseUp += new MouseEventHandler(pb_MouseUp);
                 pb_array[i].MouseMove += new MouseEventHandler(pb_MouseMove);
                 Controls.Add(pb_array[i]);
+                //
+                // Labels determining
+                //
+                lbl_array[i] = new Label();
+                lbl_array[i].Size = new Size(pb_array[i].Width,40);
+                lbl_array[i].Text = "0/AoP";
+                lbl_array[i].ForeColor = Color.White;
+                lbl_array[i].Location = new Point(pb_array[i].Location.X, pb_array[i].Location.Y-40);
+                Controls.Add(lbl_array[i]);
             }
             for (int i = 0; i < amount - 1; i++)
                 for (int j = i + 1; j < amount; j++)
@@ -198,6 +213,10 @@ namespace CourseWork
                 for (int j = i + 1; j < trackBar1.Value; j++)
                     buff.Graphics.DrawLine(new Pen(Color.Black),
                         new Point(pb_array[i].Location.X + pb_array[i].Width / 2, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X + pb_array[j].Width / 2, pb_array[j].Location.Y + pb_array[j].Height / 2));
+
+            for (int i=0; i < trackBar1.Value; i++)
+                lbl_array[i].Location = new Point(pb_array[i].Location.X, pb_array[i].Location.Y - 40);
+
             buff.Render();
         }
 
