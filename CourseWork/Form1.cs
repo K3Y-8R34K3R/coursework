@@ -1,4 +1,8 @@
-﻿#region using's
+﻿//
+//TO-DO: complete start_trading function
+//
+
+#region using's
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -28,10 +32,23 @@ namespace CourseWork
         Image button_start_img = Image.FromFile("res\\button_start.png");
         Image button_draw_img = Image.FromFile("res\\button_draw.png");
         Image peer_img = Image.FromFile("res\\peer.png");
-
         //
-        // "Peers" array, labels array and some of bools for correct work
+        // "Peers", labels, data arrays and some of bools for correct work
         //
+        Random rand = new Random();
+        const int amount_of_data = 100;
+        int[][] data = {
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data],
+        new int[amount_of_data]};
         Label[] lbl_array = new Label[11];
         PictureBox[] pb_array = new PictureBox[11];
 
@@ -77,6 +94,30 @@ namespace CourseWork
 
         #region custom methods
 
+        private int count_data(int index)
+        {
+            int amount = 0;
+            for (int i = 0; i < amount_of_data; i++)
+                if (data[index][i] == 1) amount++;
+            return amount;
+        }
+
+
+        private void fill_data()
+        {
+            for (int i = 0; i < 11; i++)
+                for (int j = 0; j < amount_of_data; j++)
+                    data[i][j] = 0;
+
+            for (int i = 0; i < 11; i++)
+            {
+                int j = rand.Next(0, 99);
+                for (int k = 0; k < j; k++)
+                    data[i][rand.Next(0, 99)] = 1;
+            }
+        }
+
+
         /// <summary>
         /// Method for loading screen formation
         /// </summary>
@@ -106,19 +147,23 @@ namespace CourseWork
                 trackBar1.Location = new Point(label1.Location.X, label1.Location.Y + 48);
                 trackBar1.Size = new Size(355, 100);
                 //
-                // button %smth%
-                //
-                //button_draw.Visible = true;
-                //button_draw.Location = new Point(trackBar1.Location.X, trackBar1.Location.Y + 48);
-                //button_exit.Size = button_draw_img.Size;
-                //button_exit.Image = button_draw_img;
-                //
                 //button exit
                 //
                 button_exit.Visible = true;
                 button_exit.Location = new Point(this.Width - 48 - button_exit_img.Width, this.Height - 48 - button_exit_img.Height);
                 button_exit.Size = button_exit_img.Size;
                 button_exit.Image = button_exit_img;
+                //
+                // button start
+                //
+                button_start.Visible = true;
+                button_start.Location = new Point(button_exit.Location.X, trackBar1.Location.Y - 48);
+                button_start.Size = button_start_img.Size;
+                button_start.Image = button_start_img;
+                //
+                // timer of refresh
+                //
+                numericUpDown1.Location = new Point(button_start.Location.X - 108, trackBar1.Location.Y);
             }
             catch (FileNotFoundException)
             {
@@ -128,9 +173,9 @@ namespace CourseWork
             picturebox_draw(this, trackBar1.Value, new PaintEventArgs(CreateGraphics(), ClientRectangle));
         }
 
-        //
-        // Peer creating, drawing and linking methods
-        //
+        /// <summary>
+        /// Peer creating, drawing and linking methods
+        /// </summary>
         private void picturebox_draw(object sender, int amount, PaintEventArgs e)
         {
             buff.Dispose(); // clearing resources of buffer
@@ -161,10 +206,10 @@ namespace CourseWork
                 // Labels determining
                 //
                 lbl_array[i] = new Label();
-                lbl_array[i].Size = new Size(pb_array[i].Width,40);
-                lbl_array[i].Text = "0/AoP";
+                lbl_array[i].Size = new Size(pb_array[i].Width, 40);
+                lbl_array[i].Text = count_data(i).ToString() + "/" + amount_of_data.ToString();
                 lbl_array[i].ForeColor = Color.White;
-                lbl_array[i].Location = new Point(pb_array[i].Location.X, pb_array[i].Location.Y-40);
+                lbl_array[i].Location = new Point(pb_array[i].Location.X, pb_array[i].Location.Y - 40);
                 Controls.Add(lbl_array[i]);
             }
             for (int i = 0; i < amount - 1; i++)
@@ -172,6 +217,7 @@ namespace CourseWork
                     buff.Graphics.DrawLine(new Pen(Color.Black),
                         new Point(pb_array[i].Location.X + pb_array[i].Width, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X, pb_array[j].Location.Y + pb_array[j].Height / 2));
             buff.Render(); // rendering peers
+            fill_data();
         }
 
         /// <summary>
@@ -214,7 +260,7 @@ namespace CourseWork
                     buff.Graphics.DrawLine(new Pen(Color.Black),
                         new Point(pb_array[i].Location.X + pb_array[i].Width / 2, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X + pb_array[j].Width / 2, pb_array[j].Location.Y + pb_array[j].Height / 2));
 
-            for (int i=0; i < trackBar1.Value; i++)
+            for (int i = 0; i < trackBar1.Value; i++)
                 lbl_array[i].Location = new Point(pb_array[i].Location.X, pb_array[i].Location.Y - 40);
 
             buff.Render();
@@ -277,6 +323,21 @@ namespace CourseWork
             picturebox_draw(this, trackBar1.Value, new PaintEventArgs(CreateGraphics(), ClientRectangle));
         }
         #endregion
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            timer2.Interval = (int)numericUpDown1.Value;
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            start_trading();
+        }
+
+        private void button_start_Click(object sender, EventArgs e)
+        {
+            timer2.Start();
+        }
     }
 }
 
