@@ -163,6 +163,7 @@ namespace CourseWork
                 //
                 // timer of refresh
                 //
+                numericUpDown1.Visible = true;
                 numericUpDown1.Location = new Point(button_start.Location.X - 108, trackBar1.Location.Y);
             }
             catch (FileNotFoundException)
@@ -189,6 +190,7 @@ namespace CourseWork
                 lbl_array[iter].Dispose();
                 iter++;
             }
+            fill_data();
             for (int i = 0; i < amount; i++) // creating each peer etc.
             {
                 //
@@ -331,7 +333,7 @@ namespace CourseWork
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            start_trading();
+            //start_trading();
         }
 
         private void button_start_Click(object sender, EventArgs e)
