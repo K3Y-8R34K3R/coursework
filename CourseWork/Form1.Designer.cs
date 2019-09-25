@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main_Form));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.loading_picture = new System.Windows.Forms.PictureBox();
             this.button_exit = new System.Windows.Forms.PictureBox();
@@ -124,6 +125,7 @@
             this.Controls.Add(this.button_exit);
             this.Controls.Add(this.loading_picture);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main_Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "P2P Network Visualisation";

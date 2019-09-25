@@ -363,13 +363,14 @@ namespace CourseWork
             simulating = true;
             start_trading();
         }
-        #endregion
 
         private void button_logs_Click(object sender, EventArgs e)
         {
             f2.Show();
             f2.Activate();
         }
+        #endregion
+
     }
 }
 
