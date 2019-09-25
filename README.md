@@ -1,4 +1,4 @@
-# coursework
+# Coursework
 Coursework powered by C#
 
 Technical tasks to the course work on the discipline "Programming languages".
