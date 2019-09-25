@@ -1,8 +1,4 @@
-﻿//
-//TO-DO: complete start_trading function
-//
-
-#region using's
+﻿#region using's
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -24,6 +20,7 @@ namespace CourseWork
         Image button_exit_img = Image.FromFile("res\\button_exit.png");
         Image button_start_img = Image.FromFile("res\\button_start.png");
         Image button_draw_img = Image.FromFile("res\\button_draw.png");
+        Image button_logs_img = Image.FromFile("res\\button_logs.png");
         Image peer_img = Image.FromFile("res\\peer.png");
         //
         // "Peers", labels, data arrays and some of bools for correct work
@@ -49,6 +46,8 @@ namespace CourseWork
         bool init_once = true;
         bool movement = false;
         bool simulating = false;
+
+        Form2 f2 = new Form2();
 
         //
         // GUI objects
@@ -117,20 +116,25 @@ namespace CourseWork
         /// </summary>
         private void start_trading()
         {
+            int amount_of_tradings = 0;
             if (simulating)
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < trackBar1.Value-1; i++)
                 {
-                    for (int j = i; j < 11; j++)
+                    for (int j = i + 1; j < trackBar1.Value; j++)
+                    {
                         for (int k = 0; k < amount_of_data; k++)
                         {
                             if (data[i][k] != data[j][k])
                             {
                                 data[i][k] = 1;
                                 data[j][k] = 1;
+                                amount_of_tradings++;
                             }
-                            //Thread.Sleep((int)numericUpDown1.Value);
                         }
+                        f2.TxtBox += "Обменов пакетами между пирами №" + (i+1).ToString() + " и №" + (j+1).ToString() + ": " + amount_of_tradings.ToString() + Environment.NewLine;
+                        amount_of_tradings = 0;
+                    }
                     for (int l = 0; l < trackBar1.Value; l++)
                     {
                         pb_position_old[l] = pb_array[l].Location;
@@ -176,6 +180,13 @@ namespace CourseWork
                 button_exit.Location = new Point(this.Width - 48 - button_exit_img.Width, this.Height - 48 - button_exit_img.Height);
                 button_exit.Size = button_exit_img.Size;
                 button_exit.Image = button_exit_img;
+                //
+                //button logs
+                //
+                button_logs.Visible = true;
+                button_logs.Location = new Point(button_exit.Location.X, button_exit.Location.Y - 48);
+                button_logs.Size = button_logs_img.Size;
+                button_logs.Image = button_logs_img;
                 //
                 // button start
                 //
@@ -231,7 +242,7 @@ namespace CourseWork
                 //
                 lbl_array[i] = new Label();
                 lbl_array[i].Size = new Size(pb_array[i].Width, 40);
-                lbl_array[i].Text = count_data(i).ToString() + "/" + amount_of_data.ToString();
+                lbl_array[i].Text = "Peer № " + (i + 1).ToString() + "\n" + count_data(i).ToString() + "/" + amount_of_data.ToString();
                 lbl_array[i].ForeColor = Color.White;
                 lbl_array[i].Location = new Point(pb_array[i].Location.X, pb_array[i].Location.Y - 40);
                 Controls.Add(lbl_array[i]);
@@ -353,6 +364,12 @@ namespace CourseWork
             start_trading();
         }
         #endregion
+
+        private void button_logs_Click(object sender, EventArgs e)
+        {
+            f2.Show();
+            f2.Activate();
+        }
     }
 }
 

@@ -35,10 +35,12 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.button_start = new System.Windows.Forms.PictureBox();
+            this.button_logs = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_exit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_start)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_logs)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -100,11 +102,22 @@
             this.button_start.Visible = false;
             this.button_start.Click += new System.EventHandler(this.button_start_Click);
             // 
+            // button_logs
+            // 
+            this.button_logs.Location = new System.Drawing.Point(756, 218);
+            this.button_logs.Name = "button_logs";
+            this.button_logs.Size = new System.Drawing.Size(16, 20);
+            this.button_logs.TabIndex = 9;
+            this.button_logs.TabStop = false;
+            this.button_logs.Visible = false;
+            this.button_logs.Click += new System.EventHandler(this.button_logs_Click);
+            // 
             // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 295);
+            this.Controls.Add(this.button_logs);
             this.Controls.Add(this.button_start);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.trackBar1);
@@ -113,7 +126,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Main_Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "P2P Network Visualisator";
+            this.Text = "P2P Network Visualisation";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_Form_FormClosing);
             this.Load += new System.EventHandler(this.Main_Form_Load);
@@ -122,6 +135,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.button_exit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.button_start)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button_logs)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,6 +148,7 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox button_start;
+        private System.Windows.Forms.PictureBox button_logs;
     }
 }
 
