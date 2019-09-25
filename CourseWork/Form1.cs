@@ -7,14 +7,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading;
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 #endregion
 
 namespace CourseWork
@@ -51,9 +44,11 @@ namespace CourseWork
         new int[amount_of_data]};
         Label[] lbl_array = new Label[11];
         PictureBox[] pb_array = new PictureBox[11];
+        Point[] pb_position_old = new Point[11];
 
         bool init_once = true;
         bool movement = false;
+        bool simulating = false;
 
         //
         // GUI objects
@@ -111,12 +106,40 @@ namespace CourseWork
 
             for (int i = 0; i < 11; i++)
             {
-                int j = rand.Next(0, 99);
+                int j = rand.Next(0, 100);
                 for (int k = 0; k < j; k++)
-                    data[i][rand.Next(0, 99)] = 1;
+                    data[i][rand.Next(0, 100)] = 1;
             }
         }
 
+        /// <summary>
+        /// Method for information trading
+        /// </summary>
+        private void start_trading()
+        {
+            if (simulating)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    for (int j = i; j < 11; j++)
+                        for (int k = 0; k < amount_of_data; k++)
+                        {
+                            if (data[i][k] != data[j][k])
+                            {
+                                data[i][k] = 1;
+                                data[j][k] = 1;
+                            }
+                            //Thread.Sleep((int)numericUpDown1.Value);
+                        }
+                    for (int l = 0; l < trackBar1.Value; l++)
+                    {
+                        pb_position_old[l] = pb_array[l].Location;
+                    }
+                    picturebox_draw(this, trackBar1.Value, new PaintEventArgs(CreateGraphics(), ClientRectangle));
+                }
+            }
+            simulating = false;
+        }
 
         /// <summary>
         /// Method for loading screen formation
@@ -160,11 +183,6 @@ namespace CourseWork
                 button_start.Location = new Point(button_exit.Location.X, trackBar1.Location.Y - 48);
                 button_start.Size = button_start_img.Size;
                 button_start.Image = button_start_img;
-                //
-                // timer of refresh
-                //
-                numericUpDown1.Visible = true;
-                numericUpDown1.Location = new Point(button_start.Location.X - 108, trackBar1.Location.Y);
             }
             catch (FileNotFoundException)
             {
@@ -190,7 +208,8 @@ namespace CourseWork
                 lbl_array[iter].Dispose();
                 iter++;
             }
-            fill_data();
+            if (!simulating)
+                fill_data();
             for (int i = 0; i < amount; i++) // creating each peer etc.
             {
                 //
@@ -199,7 +218,10 @@ namespace CourseWork
                 pb_array[i] = new PictureBox();
                 pb_array[i].Image = peer_img;
                 pb_array[i].Size = peer_img.Size;
-                pb_array[i].Location = new Point(48 + i * (pb_array[i].Width + 50), 188);
+                if (!simulating)
+                    pb_array[i].Location = new Point(48 + i * (pb_array[i].Width + 50), 188);
+                else
+                    pb_array[i].Location = pb_position_old[i];
                 pb_array[i].MouseDown += new MouseEventHandler(pb_MouseDown);
                 pb_array[i].MouseUp += new MouseEventHandler(pb_MouseUp);
                 pb_array[i].MouseMove += new MouseEventHandler(pb_MouseMove);
@@ -219,7 +241,6 @@ namespace CourseWork
                     buff.Graphics.DrawLine(new Pen(Color.Black),
                         new Point(pb_array[i].Location.X + pb_array[i].Width, pb_array[i].Location.Y + pb_array[i].Height / 2), new Point(pb_array[j].Location.X, pb_array[j].Location.Y + pb_array[j].Height / 2));
             buff.Render(); // rendering peers
-            fill_data();
         }
 
         /// <summary>
@@ -322,24 +343,16 @@ namespace CourseWork
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
+            simulating = false;
             picturebox_draw(this, trackBar1.Value, new PaintEventArgs(CreateGraphics(), ClientRectangle));
-        }
-        #endregion
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            timer2.Interval = (int)numericUpDown1.Value;
-        }
-
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            //start_trading();
         }
 
         private void button_start_Click(object sender, EventArgs e)
         {
-            timer2.Start();
+            simulating = true;
+            start_trading();
         }
+        #endregion
     }
 }
 
