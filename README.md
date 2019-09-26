@@ -9,6 +9,9 @@ It is necessary to develop a program to simulate the operation of the peer-to-pe
 You can download the installator of the latest version of the software from [here](https://drive.google.com/file/d/1LnJW-SPrpRzt6G0GDvDDfAosWEYmmQsN/view?usp=sharing)
 
 Filename: P2PNV_Setup.exe
+
 Version: 1.0.0
+
 Size: 51 Mb
+
 Supported OS: Windows 7 (SP3) and higher
